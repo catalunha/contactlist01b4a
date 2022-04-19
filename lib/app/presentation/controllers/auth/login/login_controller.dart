@@ -1,7 +1,9 @@
 import 'package:contactlist01b4a/app/data/datasources/back4app/auth/auth_repository_exception.dart';
 import 'package:contactlist01b4a/app/domain/usecases/auth/auth_usecase.dart';
+import 'package:contactlist01b4a/app/presentation/controllers/auth/splash/splash_controller.dart';
 import 'package:contactlist01b4a/app/presentation/controllers/utils/mixins/loader_mixin.dart';
 import 'package:contactlist01b4a/app/presentation/controllers/utils/mixins/message_mixin.dart';
+import 'package:contactlist01b4a/app/presentation/routes.dart';
 import 'package:get/get.dart';
 
 class LoginController extends GetxController with LoaderMixin, MessageMixin {
@@ -9,8 +11,12 @@ class LoginController extends GetxController with LoaderMixin, MessageMixin {
   final _message = Rxn<MessageModel>();
 
   final AuthUseCase _authUseCase;
-  LoginController({required AuthUseCase authUseCase})
-      : _authUseCase = authUseCase;
+  final SplashController _splashController;
+  LoginController({
+    required AuthUseCase authUseCase,
+    required SplashController splashController,
+  })  : _authUseCase = authUseCase,
+        _splashController = splashController;
 
   @override
   void onInit() {
@@ -25,7 +31,8 @@ class LoginController extends GetxController with LoaderMixin, MessageMixin {
       final user =
           await _authUseCase.loginEmail(email: email, password: password);
       if (user != null) {
-        //success
+        _splashController.userModel = user;
+        Get.offAllNamed(Routes.home);
       } else {
         _message.value = MessageModel(
           title: 'Erro',

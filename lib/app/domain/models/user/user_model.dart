@@ -1,19 +1,21 @@
 import 'dart:convert';
 
 class UserModel {
-  static const String collection = 'User';
+  static const String className = '_User';
 
   final String objectId;
   final String email;
   final String username;
-  final DateTime createdAt;
-  final DateTime updatedAt;
+  final String sessionToken;
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
   UserModel({
     required this.objectId,
     required this.email,
     required this.username,
-    required this.createdAt,
-    required this.updatedAt,
+    this.createdAt,
+    this.updatedAt,
+    required this.sessionToken,
   });
 
   UserModel copyWith({
@@ -22,6 +24,7 @@ class UserModel {
     String? username,
     DateTime? createdAt,
     DateTime? updatedAt,
+    String? sessionToken,
   }) {
     return UserModel(
       objectId: objectId ?? this.objectId,
@@ -29,6 +32,7 @@ class UserModel {
       username: username ?? this.username,
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
+      sessionToken: sessionToken ?? this.sessionToken,
     );
   }
 
@@ -37,8 +41,9 @@ class UserModel {
       'objectId': objectId,
       'email': email,
       'username': username,
-      'createdAt': createdAt.millisecondsSinceEpoch,
-      'updatedAt': updatedAt.millisecondsSinceEpoch,
+      'createdAt': createdAt,
+      'updatedAt': updatedAt,
+      'sessionToken': sessionToken,
     };
   }
 
@@ -47,19 +52,38 @@ class UserModel {
       objectId: map['objectId'] ?? '',
       email: map['email'] ?? '',
       username: map['username'] ?? '',
-      createdAt: DateTime.fromMillisecondsSinceEpoch(map['createdAt']),
-      updatedAt: DateTime.fromMillisecondsSinceEpoch(map['updatedAt']),
+      createdAt: map['createdAt'] != null
+          ? DateTime.tryParse(map['createdAt'].toString())
+          : null,
+      updatedAt: map['updatedAt'] != null
+          ? DateTime.tryParse(map['updatedAt'].toString())
+          : null,
+      sessionToken: map['sessionToken'],
     );
   }
 
-  String toJson() => json.encode(toMap());
+  // String toJson() => json.encode(toMap());
 
-  factory UserModel.fromJson(String source) =>
-      UserModel.fromMap(json.decode(source));
+  // factory UserModel.fromJson(String source) =>
+  //     UserModel.fromMap(json.decode(source));
+  String toJson() {
+    var map = toMap();
+    map['createdAt'] = createdAt?.toIso8601String();
+    map['updatedAt'] = updatedAt?.toIso8601String();
+    return json.encode(map);
+  }
 
+  factory UserModel.fromJson(String source) {
+    var map = json.decode(source);
+    map['createdAt'] =
+        map['createdAt'] != null ? DateTime.tryParse(map['createdAt']) : null;
+    map['updatedAt'] =
+        map['updatedAt'] != null ? DateTime.tryParse(map['updatedAt']) : null;
+    return UserModel.fromMap(map);
+  }
   @override
   String toString() {
-    return 'UserModel(objectId: $objectId, email: $email, username: $username, createdAt: $createdAt, updatedAt: $updatedAt)';
+    return 'UserModel(objectId: $objectId, email: $email, username: $username, createdAt: $createdAt, updatedAt: $updatedAt, sessionToken: $sessionToken)';
   }
 
   @override
@@ -71,7 +95,8 @@ class UserModel {
         other.email == email &&
         other.username == username &&
         other.createdAt == createdAt &&
-        other.updatedAt == updatedAt;
+        other.updatedAt == updatedAt &&
+        other.sessionToken == sessionToken;
   }
 
   @override
@@ -80,6 +105,7 @@ class UserModel {
         email.hashCode ^
         username.hashCode ^
         createdAt.hashCode ^
-        updatedAt.hashCode;
+        updatedAt.hashCode ^
+        sessionToken.hashCode;
   }
 }

@@ -10,9 +10,9 @@ class AuthUseCaseImpl implements AuthUseCase {
     required AuthRepository authRepository,
   }) : _authRepository = authRepository;
   @override
-  Future<UserModel?> register(
+  Future<UserModel?> registerEmail(
           {required String email, required String password}) =>
-      _authRepository.register(email: email, password: password);
+      _authRepository.registerEmail(email: email, password: password);
 
   @override
   Future<UserModel?> loginEmail(
@@ -24,5 +24,5 @@ class AuthUseCaseImpl implements AuthUseCase {
       _authRepository.forgotPassword(email);
 
   @override
-  Future<void> logout() => _authRepository.logout();
+  Future<bool> logout() => _authRepository.logout();
 }

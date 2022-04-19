@@ -1,12 +1,12 @@
 import 'package:contactlist01b4a/app/presentation/controllers/auth/login/login_dependencies.dart';
-import 'package:contactlist01b4a/app/presentation/controllers/auth/register/email_password/email_dependencies.dart';
+import 'package:contactlist01b4a/app/presentation/controllers/auth/register/email/email_dependencies.dart';
+import 'package:contactlist01b4a/app/presentation/controllers/auth/splash/splash_dependencies.dart';
 import 'package:contactlist01b4a/app/presentation/controllers/home/home_dependencies.dart';
-import 'package:contactlist01b4a/app/presentation/controllers/splash/splash_dependencies.dart';
 import 'package:contactlist01b4a/app/presentation/pages/auth/login/login_page.dart';
-import 'package:contactlist01b4a/app/presentation/pages/auth/method/email/email_page.dart';
+import 'package:contactlist01b4a/app/presentation/pages/auth/register/email/email_page.dart';
+import 'package:contactlist01b4a/app/presentation/pages/auth/splash/splash_page.dart';
 import 'package:contactlist01b4a/app/presentation/pages/error/error_page.dart';
 import 'package:contactlist01b4a/app/presentation/pages/home/home_page.dart';
-import 'package:contactlist01b4a/app/presentation/pages/splash/splash_page.dart';
 import 'package:get/get.dart';
 
 class Routes {
@@ -29,7 +29,7 @@ class Routes {
     GetPage(
       name: Routes.home,
       binding: HomeDependencies(),
-      page: () => const HomePage(),
+      page: () => HomePage(),
     ),
     GetPage(
       name: Routes.authLogin,

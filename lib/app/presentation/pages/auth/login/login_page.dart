@@ -50,10 +50,10 @@ class _AuthLoginPageState extends State<AuthLoginPage> {
                   children: [
                     const SizedBox(height: 10),
                     const AppLogo(),
-                    Text('ToDo - Versão 05',
+                    Text('ContactList - Versão 01',
                         style: context.textTheme.headline6),
                     const Text(
-                      '(~CleanCode/~MVVM, GetX, Hive, Firebase Auth, Firebase Firestore)',
+                      '(all in bach4app)',
                       textAlign: TextAlign.center,
                     ),
                     // Text('Todo List', style: Theme.of(context).textTheme.headline6),

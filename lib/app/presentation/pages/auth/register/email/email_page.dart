@@ -1,4 +1,4 @@
-import 'package:contactlist01b4a/app/presentation/controllers/auth/register/email_password/email_controller.dart';
+import 'package:contactlist01b4a/app/presentation/controllers/auth/register/email/email_controller.dart';
 import 'package:contactlist01b4a/app/presentation/pages/utils/part/app_text_form_field.dart';
 import 'package:contactlist01b4a/app/presentation/pages/utils/part/logo.dart';
 import 'package:contactlist01b4a/app/presentation/pages/utils/validators/validators.dart';
@@ -122,7 +122,7 @@ class _AuthEmailPageState extends State<AuthEmailPage> {
                       final formValid =
                           _formKey.currentState?.validate() ?? false;
                       if (formValid) {
-                        widget._emailPasswordController.registerUser(
+                        widget._emailPasswordController.registerEmail(
                           email: _emailTec.text.trim(),
                           password: _passwordTec.text.trim(),
                         );

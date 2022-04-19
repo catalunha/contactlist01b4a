@@ -2,15 +2,16 @@ import 'package:contactlist01b4a/app/data/datasources/back4app/auth/auth_reposit
 import 'package:contactlist01b4a/app/domain/usecases/auth/auth_usecase.dart';
 import 'package:contactlist01b4a/app/presentation/controllers/utils/mixins/loader_mixin.dart';
 import 'package:contactlist01b4a/app/presentation/controllers/utils/mixins/message_mixin.dart';
+import 'package:contactlist01b4a/app/presentation/routes.dart';
 import 'package:get/get.dart';
 
 class EmailController extends GetxController with LoaderMixin, MessageMixin {
   final _loading = false.obs;
   final _message = Rxn<MessageModel>();
 
-  final AuthUseCase _authService;
-  EmailController({required AuthUseCase authService})
-      : _authService = authService;
+  final AuthUseCase _authUseCase;
+  EmailController({required AuthUseCase authUseCase})
+      : _authUseCase = authUseCase;
 
   @override
   void onInit() {
@@ -19,20 +20,21 @@ class EmailController extends GetxController with LoaderMixin, MessageMixin {
     messageListener(_message);
   }
 
-  Future<void> registerUser({
+  Future<void> registerEmail({
     required String email,
     required String password,
   }) async {
     try {
-      final user = await _authService.register(
+      final user = await _authUseCase.registerEmail(
         email: email,
         password: password,
       );
       _loading(true);
       if (user != null) {
-        //success
+        print('Success register');
+        Get.offAllNamed(Routes.authLogin);
       } else {
-        _authService.logout();
+        _authUseCase.logout();
         _message.value = MessageModel(
           title: 'Erro',
           message: 'Em registrar usuário',
@@ -40,7 +42,7 @@ class EmailController extends GetxController with LoaderMixin, MessageMixin {
         );
       }
     } on AuthRepositoryException {
-      _authService.logout();
+      _authUseCase.logout();
       _message.value = MessageModel(
         title: 'AuthRepositoryException',
         message: 'Em registrar usuário',

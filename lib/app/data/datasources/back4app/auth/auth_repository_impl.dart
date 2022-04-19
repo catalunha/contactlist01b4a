@@ -5,15 +5,17 @@ import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
 
 class AuthRepositoryImpl implements AuthRepository {
   @override
-  Future<UserModel?> register(
+  Future<UserModel?> registerEmail(
       {required String email, required String password}) async {
     try {
       final user = ParseUser.createUser(email, password, email);
       var response = await user.signUp();
-      if (!response.success) {
-        throw AuthRepositoryException(message: 'Registro Ok...');
+      if (response.success) {
+        String result = response.results![0].toString();
+        UserModel userModel = UserModel.fromJson(result);
+        print(userModel.toMap());
+        return userModel;
       } else {
-        // return null;
         throw AuthRepositoryException(message: response.error!.message);
       }
     } catch (e) {
@@ -26,7 +28,17 @@ class AuthRepositoryImpl implements AuthRepository {
   Future<UserModel?> loginEmail(
       {required String email, required String password}) async {
     try {
-      return null;
+      final user = ParseUser(email, password, null);
+
+      var response = await user.login();
+      if (response.success) {
+        String result = response.results![0].toString();
+        UserModel userModel = UserModel.fromJson(result);
+        print(userModel.toMap());
+        return userModel;
+      } else {
+        throw AuthRepositoryException(message: response.error!.message);
+      }
     } catch (e) {
       throw AuthRepositoryException(message: 'Erro ao realizar login');
     }
@@ -36,5 +48,13 @@ class AuthRepositoryImpl implements AuthRepository {
   Future<void> forgotPassword(String email) async {}
 
   @override
-  Future<void> logout() async {}
+  Future<bool> logout() async {
+    final user = await ParseUser.currentUser() as ParseUser;
+    var response = await user.logout();
+    if (response.success) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 }
