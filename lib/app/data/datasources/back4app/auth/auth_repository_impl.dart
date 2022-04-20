@@ -11,11 +11,14 @@ class AuthRepositoryImpl implements AuthRepository {
       final user = ParseUser.createUser(email, password, email);
       var response = await user.signUp();
       if (response.success) {
+        print('register success');
         String result = response.results![0].toString();
         UserModel userModel = UserModel.fromJson(result);
         print(userModel.toMap());
         return userModel;
       } else {
+        print('register error');
+
         throw AuthRepositoryException(message: response.error!.message);
       }
     } catch (e) {
@@ -34,18 +37,28 @@ class AuthRepositoryImpl implements AuthRepository {
       if (response.success) {
         String result = response.results![0].toString();
         UserModel userModel = UserModel.fromJson(result);
-        print(userModel.toMap());
+        // print(userModel.toMap());
         return userModel;
       } else {
-        throw AuthRepositoryException(message: response.error!.message);
+        throw AuthRepositoryException(message: '${response.error!.code}');
       }
-    } catch (e) {
-      throw AuthRepositoryException(message: 'Erro ao realizar login');
+    } on AuthRepositoryException catch (e) {
+      if (e.message == '205') {
+        throw AuthRepositoryException(
+            message: 'Cadastro ainda não confirmado no email do usuário.');
+      }
     }
+    return null;
   }
 
   @override
-  Future<void> forgotPassword(String email) async {}
+  Future<void> forgotPassword(String email) async {
+    final ParseUser user = ParseUser(null, null, email);
+    final ParseResponse parseResponse = await user.requestPasswordReset();
+    if (!parseResponse.success) {
+      throw AuthRepositoryException(message: 'Erro em recuperar senha');
+    }
+  }
 
   @override
   Future<bool> logout() async {

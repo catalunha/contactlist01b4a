@@ -28,8 +28,8 @@ class SplashController extends GetxController {
       // deleayed code here
       print('delayed execution');
     });
-    await _hasUserLogged();
-    if (parseUser != null) {
+    final isLogged = await _hasUserLogged();
+    if (isLogged) {
       print('tem user indo para home');
       Get.offAllNamed(Routes.home);
     } else {

@@ -5,6 +5,7 @@ import 'package:contactlist01b4a/app/presentation/controllers/utils/mixins/loade
 import 'package:contactlist01b4a/app/presentation/controllers/utils/mixins/message_mixin.dart';
 import 'package:contactlist01b4a/app/presentation/routes.dart';
 import 'package:get/get.dart';
+import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
 
 class LoginController extends GetxController with LoaderMixin, MessageMixin {
   final _loading = false.obs;
@@ -32,6 +33,9 @@ class LoginController extends GetxController with LoaderMixin, MessageMixin {
           await _authUseCase.loginEmail(email: email, password: password);
       if (user != null) {
         _splashController.userModel = user;
+        final parseUser = await ParseUser.currentUser() as ParseUser;
+        _splashController.parseUser = parseUser;
+
         Get.offAllNamed(Routes.home);
       } else {
         _message.value = MessageModel(
@@ -56,8 +60,8 @@ class LoginController extends GetxController with LoaderMixin, MessageMixin {
     try {
       final user = await _authUseCase.forgotPassword(email);
       _message.value = MessageModel(
-        title: 'Erro',
-        message: 'orientações sobre recuperação de senha ',
+        title: 'Veja seu email',
+        message: 'Enviamos instruções de recuperação de senha nele.',
       );
     } on AuthRepositoryException {
       _authUseCase.logout();

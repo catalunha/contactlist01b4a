@@ -6,7 +6,7 @@ class UserModel {
   final String objectId;
   final String email;
   final String username;
-  final String sessionToken;
+  final String? sessionToken;
   final DateTime? createdAt;
   final DateTime? updatedAt;
   UserModel({

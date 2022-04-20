@@ -94,6 +94,27 @@ class _AuthLoginPageState extends State<AuthLoginPage> {
                         ),
                       ),
                     ),
+                    SizedBox(
+                      width: 200,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          final formValid =
+                              _formKey.currentState?.validate() ?? false;
+                          if (formValid) {
+                            widget._loginController.loginEmail(
+                              _emailTec.text.trim(),
+                              _passwordTec.text.trim(),
+                            );
+                          }
+                        },
+                        child: const Text('Login com email/senha'),
+                        style: ElevatedButton.styleFrom(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                        ),
+                      ),
+                    ),
                     Padding(
                       padding: const EdgeInsets.symmetric(
                           horizontal: 40, vertical: 10),
@@ -101,7 +122,7 @@ class _AuthLoginPageState extends State<AuthLoginPage> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           TextButton(
-                            child: const Text('Esqueceu sua senha'),
+                            child: const Text('Esqueci sua senha.'),
                             onPressed: () {
                               if (_emailTec.text.isNotEmpty) {
                                 widget._loginController
@@ -117,74 +138,80 @@ class _AuthLoginPageState extends State<AuthLoginPage> {
                               }
                             },
                           ),
-                          ElevatedButton(
+                          TextButton(
+                            child: const Text('Desejo cadastrar-me !'),
                             onPressed: () {
-                              final formValid =
-                                  _formKey.currentState?.validate() ?? false;
-                              if (formValid) {
-                                widget._loginController.loginEmail(
-                                  _emailTec.text.trim(),
-                                  _passwordTec.text.trim(),
-                                );
-                              }
+                              Get.toNamed(Routes.authEmail);
                             },
-                            child: const Text('Login'),
-                            style: ElevatedButton.styleFrom(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(20),
-                              ),
-                            ),
                           ),
+                          // ElevatedButton(
+                          //   onPressed: () {
+                          //     final formValid =
+                          //         _formKey.currentState?.validate() ?? false;
+                          //     if (formValid) {
+                          //       widget._loginController.loginEmail(
+                          //         _emailTec.text.trim(),
+                          //         _passwordTec.text.trim(),
+                          //       );
+                          //     }
+                          //   },
+                          //   child: const Text('Login'),
+                          //   style: ElevatedButton.styleFrom(
+                          //     shape: RoundedRectangleBorder(
+                          //       borderRadius: BorderRadius.circular(20),
+                          //     ),
+                          //   ),
+                          // ),
                         ],
                       ),
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Text('Não tem conta ?'),
-                        TextButton(
-                          onPressed: () {
-                            Get.toNamed(Routes.authEmail);
-                          },
-                          child: const Text('Cadastre-se'),
-                        )
-                      ],
-                    ),
-                    const SizedBox(height: 20),
-                    Expanded(
-                      child: Container(
-                        decoration: BoxDecoration(
-                          // color: context.primaryColor,
-                          border: Border(
-                            top: BorderSide(
-                              width: 2,
-                              color: Colors.grey.withAlpha(50),
-                            ),
-                          ),
-                        ),
-                        child: Column(
-                          children: [
-                            const SizedBox(height: 20),
-                            ElevatedButton.icon(
-                              onPressed: () {
-                                // widget._loginController.loginGoogle();
-                              },
-                              icon: const Icon(
-                                Icons.g_mobiledata,
-                                size: 50,
-                                color: Colors.red,
-                              ),
-                              label: const Text('Entre com o Google'),
-                              style: ElevatedButton.styleFrom(
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(20),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
+                    // Row(
+                    //   mainAxisAlignment: MainAxisAlignment.center,
+                    //   children: [
+                    //     const Text('Não tem conta ?'),
+                    //     TextButton(
+                    //       onPressed: () {
+                    //         Get.toNamed(Routes.authEmail);
+                    //       },
+                    //       child: const Text('Cadastre-se'),
+                    //     )
+                    //   ],
+                    // ),
+                    // const SizedBox(height: 20),
+                    // Expanded(
+                    //   child: Container(
+                    //     decoration: BoxDecoration(
+                    //       // color: context.primaryColor,
+                    //       border: Border(
+                    //         top: BorderSide(
+                    //           width: 2,
+                    //           color: Colors.grey.withAlpha(50),
+                    //         ),
+                    //       ),
+                    //     ),
+                    //     child: Column(
+                    //       children: [
+                    //         const SizedBox(height: 20),
+                    //         ElevatedButton.icon(
+                    //           onPressed: () {
+                    //             // widget._loginController.loginGoogle();
+                    //           },
+                    //           icon: const Icon(
+                    //             Icons.g_mobiledata,
+                    //             size: 50,
+                    //             color: Colors.red,
+                    //           ),
+                    //           label: const Text('Entre com o Google'),
+                    //           style: ElevatedButton.styleFrom(
+                    //             shape: RoundedRectangleBorder(
+                    //               borderRadius: BorderRadius.circular(20),
+                    //             ),
+                    //           ),
+                    //         ),
+                    //       ],
+                    //     ),
+                    //   ),
+                    // ),
                   ],
                 ),
               ),

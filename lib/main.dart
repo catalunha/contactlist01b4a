@@ -1,7 +1,6 @@
 import 'package:contactlist01b4a/app/app.dart';
 import 'package:contactlist01b4a/app/data/datasources/back4app/init_back4app.dart';
 import 'package:flutter/material.dart';
-import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -17,8 +16,8 @@ void main() async {
   // );
   InitBack4app initBack4app = InitBack4app();
   await initBack4app.init();
-  var contact = ParseObject('Contact');
-  contact.set('name', 'Flutter Android - teste 5');
-  await contact.save();
+  // var contact = ParseObject('Contact');
+  // contact.set('name', 'Flutter Android - teste 5');
+  // await contact.save();
   runApp(const App());
 }

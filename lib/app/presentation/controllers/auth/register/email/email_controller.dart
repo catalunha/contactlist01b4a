@@ -30,11 +30,13 @@ class EmailController extends GetxController with LoaderMixin, MessageMixin {
         password: password,
       );
       _loading(true);
+      print('após registerEmail ');
       if (user != null) {
         print('Success register');
         Get.offAllNamed(Routes.authLogin);
       } else {
-        _authUseCase.logout();
+        print('user==null in register');
+        // _authUseCase.logout();
         _message.value = MessageModel(
           title: 'Erro',
           message: 'Em registrar usuário',
@@ -42,6 +44,7 @@ class EmailController extends GetxController with LoaderMixin, MessageMixin {
         );
       }
     } on AuthRepositoryException {
+      print('error em  registerEmail');
       _authUseCase.logout();
       _message.value = MessageModel(
         title: 'AuthRepositoryException',

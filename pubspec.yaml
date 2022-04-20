@@ -21,6 +21,7 @@ dependencies:
   # outros
   uuid: ^3.0.6
   validatorless: ^1.2.1
+  lazy_load_scrollview: ^1.3.0
 
 dev_dependencies:
   flutter_test:

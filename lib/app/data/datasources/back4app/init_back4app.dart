@@ -14,7 +14,7 @@ class InitBack4app {
       _keyParseServerUrl,
       clientKey: _keyClientKey,
       autoSendSessionId: true,
-      debug: true,
+      // debug: true,
     );
   }
 }

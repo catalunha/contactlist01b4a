@@ -136,6 +136,8 @@ class _AuthEmailPageState extends State<AuthEmailPage> {
                     ),
                   ),
                 ),
+                const Text(
+                    'Após registrar-se consulte seu email para liberar seu acesso confirmando seu email.'),
               ]),
             ),
           )
