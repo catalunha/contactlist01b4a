@@ -19,11 +19,13 @@ class AuthRepositoryImpl implements AuthRepository {
       } else {
         print('register error');
 
-        throw AuthRepositoryException(message: response.error!.message);
+        throw AuthRepositoryException(
+            code: '${response.error!.code}', message: response.error!.message);
       }
-    } catch (e) {
+    } on AuthRepositoryException catch (e) {
       print(e);
-      throw AuthRepositoryException(message: 'Erro no createUser ou SigUp');
+      throw AuthRepositoryException(
+          code: '000', message: 'Erro no createUser ou SigUp. ${e.message}');
     }
   }
 
@@ -40,12 +42,16 @@ class AuthRepositoryImpl implements AuthRepository {
         // print(userModel.toMap());
         return userModel;
       } else {
-        throw AuthRepositoryException(message: '${response.error!.code}');
+        throw AuthRepositoryException(
+            message: response.error!.message, code: '${response.error!.code}');
       }
     } on AuthRepositoryException catch (e) {
       if (e.message == '205') {
         throw AuthRepositoryException(
+            code: '205',
             message: 'Cadastro ainda não confirmado no email do usuário.');
+      } else {
+        rethrow;
       }
     }
     return null;
@@ -56,7 +62,8 @@ class AuthRepositoryImpl implements AuthRepository {
     final ParseUser user = ParseUser(null, null, email);
     final ParseResponse parseResponse = await user.requestPasswordReset();
     if (!parseResponse.success) {
-      throw AuthRepositoryException(message: 'Erro em recuperar senha');
+      throw AuthRepositoryException(
+          code: '000', message: 'Erro em recuperar senha');
     }
   }
 

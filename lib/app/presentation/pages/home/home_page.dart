@@ -33,7 +33,8 @@ class HomePage extends StatelessWidget {
               width: double.infinity,
               color: Colors.black12,
               alignment: Alignment.center,
-              child: const Text('ScrollUp para ver mais itens')),
+              child: const Text(
+                  'ScrollUp para ver mais itens. Na Web com problemas')),
           Expanded(
             child: Obx(() => ContactList(
                   contacts: _homeController.contacts,

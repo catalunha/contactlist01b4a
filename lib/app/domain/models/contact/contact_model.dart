@@ -5,32 +5,38 @@ class ContactModel {
 
   final String id;
   final String name;
+  final String? photo;
   ContactModel({
     required this.id,
     required this.name,
+    this.photo,
   });
 
   ContactModel copyWith({
     String? id,
     String? name,
+    String? photo,
   }) {
     return ContactModel(
       id: id ?? this.id,
       name: name ?? this.name,
+      photo: photo ?? this.photo,
     );
   }
 
   Map<String, dynamic> toMap() {
     return {
-      'id': id,
+      'objectId': id,
       'name': name,
+      'photo': photo,
     };
   }
 
   factory ContactModel.fromMap(Map<String, dynamic> map) {
     return ContactModel(
-      id: map['id'] ?? '',
-      name: map['name'] ?? '',
+      id: map['objectId'],
+      name: map['name'],
+      photo: map['photo']?['url'],
     );
   }
 
@@ -40,15 +46,18 @@ class ContactModel {
       ContactModel.fromMap(json.decode(source));
 
   @override
-  String toString() => 'ContactModel(id: $id, name: $name)';
+  String toString() => 'ContactModel(id: $id, name: $name, photo:$photo)';
 
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    return other is ContactModel && other.id == id && other.name == name;
+    return other is ContactModel &&
+        other.id == id &&
+        other.name == name &&
+        other.photo == photo;
   }
 
   @override
-  int get hashCode => id.hashCode ^ name.hashCode;
+  int get hashCode => id.hashCode ^ name.hashCode ^ photo.hashCode;
 }

@@ -1,9 +1,11 @@
 import 'package:contactlist01b4a/app/data/datasources/back4app/contact/contact_repository_exception.dart';
 import 'package:contactlist01b4a/app/domain/models/contact/contact_model.dart';
 import 'package:contactlist01b4a/app/domain/usecases/contact/contact_usecase.dart';
+import 'package:contactlist01b4a/app/presentation/controllers/home/home_controller.dart';
 import 'package:contactlist01b4a/app/presentation/controllers/utils/mixins/loader_mixin.dart';
 import 'package:contactlist01b4a/app/presentation/controllers/utils/mixins/message_mixin.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 
 class ContactController extends GetxController with LoaderMixin, MessageMixin {
   final ContactUseCase _contactUseCase;
@@ -24,7 +26,7 @@ class ContactController extends GetxController with LoaderMixin, MessageMixin {
     _contactModel(model);
   }
 
-  Future<void> append(String name) async {
+  Future<void> append(String name, XFile? _xfile) async {
     try {
       _loading(true);
       if (_contactModel.value == null) {
@@ -32,11 +34,13 @@ class ContactController extends GetxController with LoaderMixin, MessageMixin {
           id: '',
           name: name,
         );
-        await _contactUseCase.create(contactModel);
+        await _contactUseCase.create(contactModel, _xfile);
       } else {
         var contactModel = _contactModel.value!.copyWith(name: name);
-        await _contactUseCase.update(contactModel);
+        await _contactUseCase.update(contactModel, _xfile);
       }
+      final HomeController _homeController = Get.find();
+      await _homeController.reloadListContacts();
     } on ContactRepositoryException {
       _message.value = MessageModel(
         title: 'Erro em Repository',
@@ -50,6 +54,9 @@ class ContactController extends GetxController with LoaderMixin, MessageMixin {
 
   Future<void> delete(String id) async {
     await _contactUseCase.delete(id);
+    final HomeController _homeController = Get.find();
+    await _homeController.reloadListContacts();
+
     Get.back();
   }
 }

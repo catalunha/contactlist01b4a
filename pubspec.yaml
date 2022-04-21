@@ -18,6 +18,9 @@ dependencies:
   google_fonts: ^2.3.1  
   # Back4app
   parse_server_sdk_flutter: ^3.1.0
+  # upload Files
+  image_picker: ^0.8.5
+  image_picker_for_web: ^2.1.6
   # outros
   uuid: ^3.0.6
   validatorless: ^1.2.1

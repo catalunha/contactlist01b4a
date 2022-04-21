@@ -1,26 +1,49 @@
+import 'dart:io';
+
 import 'package:contactlist01b4a/app/data/repositories/contact_repository.dart';
 import 'package:contactlist01b4a/app/domain/models/contact/contact_model.dart';
 import 'package:contactlist01b4a/app/domain/utils/pagination.dart';
+import 'package:flutter/foundation.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
 
 class ContactRepositoryB4a implements ContactRepository {
   @override
-  Future<void> create(ContactModel contactModel) async {
+  Future<void> create(ContactModel contactModel, XFile? _xfile) async {
     final contact = ParseObject('Contact')..set('name', contactModel.name);
+    var currentUser = await ParseUser.currentUser() as ParseUser?;
+    contact.set('createdByUser', currentUser);
+    if (_xfile != null) {
+      String fileName = _xfile.name;
+      fileName = fileName.replaceAll(RegExp(r'[^A-Za-z0-9]'), '_');
+      ParseFileBase? parseFile;
+      print('===> fileName: $fileName');
+      if (kIsWeb) {
+        //Flutter Web
+        parseFile = ParseWebFile(await _xfile.readAsBytes(),
+            name: fileName); //Name for file is required
+      } else {
+        //Flutter Mobile/Desktop
+        parseFile = ParseFile(File(_xfile.path), name: fileName);
+      }
+      await parseFile.save();
+      contact.set('photo', parseFile);
+    }
     await contact.save();
   }
 
   @override
-  Future<void> delete(String id) {
-    // TODO: implement delete
-    throw UnimplementedError();
+  Future<void> delete(String id) async {
+    var todo = ParseObject('Contact')..objectId = id;
+    await todo.delete();
   }
 
   @override
   Future<List<ContactModel>> list(Pagination pagination) async {
     QueryBuilder<ParseObject> queryContact =
         QueryBuilder<ParseObject>(ParseObject('Contact'));
-    print('_pagination in list: $pagination');
+    var currentUser = await ParseUser.currentUser() as ParseUser?;
+    queryContact.whereEqualTo('createdByUser', currentUser);
     queryContact.orderByAscending('name');
     queryContact.setAmountToSkip((pagination.page - 1) * pagination.limit);
     queryContact.setLimit(pagination.limit);
@@ -49,8 +72,28 @@ class ContactRepositoryB4a implements ContactRepository {
   }
 
   @override
-  Future<void> update(ContactModel contactModel) {
-    // TODO: implement update
-    throw UnimplementedError();
+  Future<void> update(ContactModel contactModel, XFile? _xfile) async {
+    final contact = ParseObject('Contact');
+    contact.objectId = contactModel.id;
+    contact.set('name', contactModel.name);
+    var currentUser = await ParseUser.currentUser() as ParseUser?;
+    contact.set('createdByUser', currentUser);
+
+    if (_xfile != null) {
+      String fileName = _xfile.name;
+      fileName = fileName.replaceAll(RegExp(r'[^A-Za-z0-9]'), '_');
+      ParseFileBase? parseFile;
+      if (kIsWeb) {
+        //Flutter Web
+        parseFile = ParseWebFile(await _xfile.readAsBytes(),
+            name: fileName); //Name for file is required
+      } else {
+        //Flutter Mobile/Desktop
+        parseFile = ParseFile(File(_xfile.path), name: fileName);
+      }
+      await parseFile.save();
+      contact.set('photo', parseFile);
+    }
+    await contact.save();
   }
 }

@@ -1,4 +1,5 @@
 import 'package:contactlist01b4a/app/domain/models/contact/contact_model.dart';
+import 'package:contactlist01b4a/app/presentation/pages/home/part/contact.dart';
 import 'package:flutter/material.dart';
 import 'package:lazy_load_scrollview/lazy_load_scrollview.dart';
 
@@ -22,9 +23,7 @@ class ContactList extends StatelessWidget {
         itemCount: contacts.length,
         itemBuilder: (context, index) {
           final contact = contacts[index];
-          return ListTile(
-            title: Text(contact.name),
-          );
+          return ContactInfo(contact: contact);
         },
       ),
     );

@@ -2,7 +2,7 @@ import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
 
 class InitBack4app {
   InitBack4app() {
-    init();
+    // init();
   }
 
   Future<void> init() async {

@@ -39,12 +39,23 @@ class HomeController extends GetxController {
   }
 
   Future<void> listContacts() async {
-    print('_pagination: $_pagination');
     final list = await _contactUseCase.list(_pagination.value);
     if (list.isEmpty) {
       _lastPage.value = true;
     }
     // _contactList.clear();
+    _contactList.addAll(list);
+  }
+
+  Future<void> reloadListContacts() async {
+    _contactList.clear();
+    var paginationtemp = Pagination();
+    paginationtemp.page = 1;
+    paginationtemp.limit = _pagination.value.page * _pagination.value.limit;
+    final list = await _contactUseCase.list(paginationtemp);
+    if (list.isEmpty) {
+      _lastPage.value = true;
+    }
     _contactList.addAll(list);
   }
 
@@ -56,13 +67,7 @@ class HomeController extends GetxController {
   }
 
   void nextPage() {
-    print('nextPage');
-    print('_pagination atual: $_pagination');
-    print('_pagination page: ${_pagination.value.page}');
-
     _changePagination(_pagination.value.page + 1, _pagination.value.limit);
-    print('_pagination page: ${_pagination.value.page}');
-    print('_pagination update: $_pagination');
   }
 
   void createContact() {

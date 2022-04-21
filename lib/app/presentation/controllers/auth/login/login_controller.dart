@@ -48,7 +48,7 @@ class LoginController extends GetxController with LoaderMixin, MessageMixin {
       _loading(false);
       _message.value = MessageModel(
         title: 'Oops',
-        message: e.message,
+        message: '${e.code} ${e.message}',
         isError: true,
       );
     } finally {

@@ -6,17 +6,40 @@ import 'package:get/get.dart';
 class ContactInfo extends StatelessWidget {
   final HomeController _homeController = Get.find();
 
-  final ContactModel contactModel;
-  ContactInfo({Key? key, required this.contactModel}) : super(key: key);
+  final ContactModel contact;
+  ContactInfo({Key? key, required this.contact}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      title: Text(contactModel.name),
-      subtitle: Text(contactModel.id),
+      leading: ClipRRect(
+        borderRadius: BorderRadius.circular(8.0),
+        child:
+            // _homeController.userModel.photoUrl != null
+            //     ?
+            Image.network(
+          contact.photo ?? '',
+          // loadingBuilder: (_, __, ___) {
+          //   return Center(child: const CircularProgressIndicator());
+          // },
+          height: 58,
+          width: 58,
+          errorBuilder: (_, __, ___) {
+            return const SizedBox(
+              height: 58,
+              width: 58,
+              child: Icon(
+                Icons.person,
+              ),
+            );
+          },
+        ),
+      ),
+      title: Text(contact.name),
+      subtitle: Text(contact.id),
       onTap: () {
         print('click');
-        _homeController.editContact(contactModel.id);
+        _homeController.editContact(contact.id);
       },
     );
   }

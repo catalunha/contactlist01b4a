@@ -2,6 +2,7 @@ import 'package:contactlist01b4a/app/data/repositories/contact_repository.dart';
 import 'package:contactlist01b4a/app/domain/models/contact/contact_model.dart';
 import 'package:contactlist01b4a/app/domain/usecases/contact/contact_usecase.dart';
 import 'package:contactlist01b4a/app/domain/utils/pagination.dart';
+import 'package:image_picker/image_picker.dart';
 
 class ContactUseCaseImpl implements ContactUseCase {
   final ContactRepository _contactRepository;
@@ -9,14 +10,11 @@ class ContactUseCaseImpl implements ContactUseCase {
     required ContactRepository contactRepository,
   }) : _contactRepository = contactRepository;
   @override
-  Future<void> create(ContactModel contactModel) =>
-      _contactRepository.create(contactModel);
+  Future<void> create(ContactModel contactModel, XFile? _xfile) =>
+      _contactRepository.create(contactModel, _xfile);
 
   @override
-  Future<void> delete(String id) {
-    // TODO: implement delete
-    throw UnimplementedError();
-  }
+  Future<void> delete(String id) => _contactRepository.delete(id);
 
   @override
   Future<List<ContactModel>> list(Pagination pagination) =>
@@ -29,8 +27,6 @@ class ContactUseCaseImpl implements ContactUseCase {
   }
 
   @override
-  Future<void> update(ContactModel contactModel) {
-    // TODO: implement update
-    throw UnimplementedError();
-  }
+  Future<void> update(ContactModel contactModel, XFile? _xfile) =>
+      _contactRepository.update(contactModel, _xfile);
 }
