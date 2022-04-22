@@ -2,9 +2,11 @@ import 'package:contactlist01b4a/app/domain/models/contact/contact_model.dart';
 import 'package:contactlist01b4a/app/presentation/controllers/home/home_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 class ContactInfo extends StatelessWidget {
   final HomeController _homeController = Get.find();
+  final dateFormat = DateFormat('dd/MM/y');
 
   final ContactModel contact;
   ContactInfo({Key? key, required this.contact}) : super(key: key);
@@ -35,7 +37,8 @@ class ContactInfo extends StatelessWidget {
           },
         ),
       ),
-      title: Text(contact.name),
+      title: Text(
+          '${contact.name} ${contact.birthday != null ? dateFormat.format(contact.birthday!) : "..."}'),
       subtitle: Text(contact.id),
       onTap: () {
         print('click');

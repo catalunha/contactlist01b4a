@@ -17,26 +17,49 @@ class ContactController extends GetxController with LoaderMixin, MessageMixin {
   final _contactModel = Rxn<ContactModel>();
   ContactModel? get contactModel => _contactModel.value;
 
+  final Rxn<DateTime> _selectedDate = Rxn<DateTime>();
+  DateTime? get selectedDate => _selectedDate.value;
+  set selectedDate(DateTime? selectedDate) {
+    _selectedDate.value = selectedDate;
+    // if (selectedDate != null) {
+    //   _selectedDate.value = selectedDate;
+    // } else {
+    //   _selectedDate.value = DateTime.now();
+    // }
+  }
+
   @override
   void onInit() {
     super.onInit();
     loaderListener(_loading);
     messageListener(_message);
     ContactModel? model = Get.arguments;
+    print('Get.arguments = ${Get.arguments}');
+    if (model != null) {
+      selectedDate = model.birthday;
+    } else {
+      selectedDate = null;
+    }
+    print('selectedDate: $selectedDate');
     _contactModel(model);
   }
 
   Future<void> append(String name, XFile? _xfile) async {
     try {
       _loading(true);
+      // DateTime date =
+      //     DateTime(selectedDate!.year, selectedDate!.month, selectedDate!.day);
+
       if (_contactModel.value == null) {
         var contactModel = ContactModel(
           id: '',
           name: name,
+          birthday: selectedDate,
         );
         await _contactUseCase.create(contactModel, _xfile);
       } else {
-        var contactModel = _contactModel.value!.copyWith(name: name);
+        var contactModel =
+            _contactModel.value!.copyWith(name: name, birthday: selectedDate);
         await _contactUseCase.update(contactModel, _xfile);
       }
       final HomeController _homeController = Get.find();
