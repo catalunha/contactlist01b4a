@@ -33,24 +33,26 @@ class AppTextFormField extends StatelessWidget {
             focusNode: focusNode,
             decoration: InputDecoration(
               labelText: label,
-              labelStyle: TextStyle(
+              labelStyle: const TextStyle(
                 fontSize: 15,
                 color: Colors.black,
               ),
               border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(20),
+                borderRadius: BorderRadius.circular(10.0),
               ),
               errorBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(20),
-                borderSide: BorderSide(color: Colors.red),
+                borderRadius: BorderRadius.circular(10.0),
+                borderSide: const BorderSide(color: Colors.red),
               ),
               isDense: true,
-              suffixIcon: this.suffixIconButton ??
+              suffixIcon: suffixIconButton ??
                   (obscureText == true
                       ? IconButton(
                           icon: obscureTextValue
-                              ? Icon(Icons.sentiment_very_dissatisfied_sharp)
-                              : Icon(Icons.sentiment_satisfied_alt_outlined),
+                              ? const Icon(
+                                  Icons.sentiment_very_dissatisfied_sharp)
+                              : const Icon(
+                                  Icons.sentiment_satisfied_alt_outlined),
                           onPressed: () {
                             obscureTextVN.value = !obscureTextValue;
                           },

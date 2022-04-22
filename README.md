@@ -1,9 +1,9 @@
 
 # deploy
 ```
-$ rm -r ~/myapp/contactlist01_b4a_functions/contactList01/public/*
-$ cp -a /home/catalunha/myapp/contactlist01b4a/build/web/. ~/myapp/contactlist01_b4a_functions/contactList01/public/
-$ cd ~/myapp/contactlist01_b4a_functions/contactList01
+$ rm -r ~/myapp/contactlist01b4a_cloudcode/contactList01/public/*
+$ cp -a /home/catalunha/myapp/contactlist01b4a/build/web/. ~/myapp/contactlist01b4a_cloudcode/contactList01/public/
+$ cd ~/myapp/contactlist01b4a_cloudcode/contactList01
 $ b4a deploy
 ```
 

@@ -22,14 +22,12 @@ class CalendarButton extends StatelessWidget {
         );
         _controller.selectedDate = selectedDate;
       },
-      borderRadius: BorderRadius.circular(30),
+      // borderRadius: BorderRadius.circular(10.0),
       child: Container(
         padding: const EdgeInsets.all(10),
         decoration: BoxDecoration(
-            border: Border.all(
-              color: Colors.grey,
-            ),
-            borderRadius: BorderRadius.circular(30)),
+            border: Border.all(color: Colors.grey),
+            borderRadius: BorderRadius.circular(10.0)),
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -37,20 +35,12 @@ class CalendarButton extends StatelessWidget {
               Icons.today,
               color: Colors.grey,
             ),
-            const SizedBox(
-              width: 10,
-            ),
+            const SizedBox(width: 10),
             Obx(() {
               if (_controller.selectedDate != null) {
-                return Text(
-                  dateFormat.format(_controller.selectedDate!),
-                  // style: context.titleStyle,
-                );
+                return Text(dateFormat.format(_controller.selectedDate!));
               } else {
-                return const Text(
-                  'Selecione uma data',
-                  // style: context.titleStyle,
-                );
+                return const Text('Selecione uma data');
               }
             }),
           ],

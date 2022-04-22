@@ -23,8 +23,21 @@ class HomePage extends StatelessWidget {
             )),
         actions: [
           IconButton(
-              onPressed: () => _homeController.logout(),
-              icon: const Icon(Icons.exit_to_app))
+            onPressed: () async {
+              int qtde = await _homeController.countContacts();
+              Get.snackbar(
+                'Count via CloudCoud',
+                'Quantidade de contatos: $qtde',
+                backgroundColor: Colors.green,
+                margin: const EdgeInsets.all(10),
+              );
+            },
+            icon: const Icon(Icons.format_list_numbered),
+          ),
+          IconButton(
+            onPressed: () => _homeController.logout(),
+            icon: const Icon(Icons.exit_to_app),
+          ),
         ],
       ),
       body: Column(

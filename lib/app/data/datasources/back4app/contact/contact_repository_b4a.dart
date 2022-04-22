@@ -50,9 +50,9 @@ class ContactRepositoryB4a implements ContactRepository {
 
     final ParseResponse apiResponse = await queryContact.query();
     if (apiResponse.success && apiResponse.results != null) {
-      for (var item in apiResponse.results!) {
-        print(item.toString());
-      }
+      // for (var item in apiResponse.results!) {
+      //   print(item.toString());
+      // }
       List<ContactModel> contactList = [];
       contactList = apiResponse.results!
           .map((e) => ContactModel.fromJson(e.toString()))

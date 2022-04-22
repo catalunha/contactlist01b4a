@@ -2,10 +2,12 @@ import 'package:contactlist01b4a/app/domain/models/contact/contact_model.dart';
 import 'package:contactlist01b4a/app/domain/usecases/auth/auth_usecase.dart';
 import 'package:contactlist01b4a/app/domain/usecases/contact/contact_usecase.dart';
 import 'package:contactlist01b4a/app/domain/utils/pagination.dart';
+import 'package:contactlist01b4a/app/presentation/controllers/utils/mixins/loader_mixin.dart';
 import 'package:contactlist01b4a/app/presentation/routes.dart';
 import 'package:get/get.dart';
+import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
 
-class HomeController extends GetxController {
+class HomeController extends GetxController with LoaderMixin {
   final AuthUseCase _authUseCase;
   final ContactUseCase _contactUseCase;
   HomeController(
@@ -19,6 +21,9 @@ class HomeController extends GetxController {
   final _pagination = Pagination().obs;
   final _lastPage = false.obs;
   get lastPage => _lastPage.value;
+
+  final _loading = false.obs;
+
   Future<void> logout() async {
     print('em home logout ');
     await _authUseCase.logout();
@@ -28,7 +33,9 @@ class HomeController extends GetxController {
   @override
   void onInit() {
     ever(_pagination, (_) => listContacts());
-    _changePagination(1, 2);
+    _changePagination(1, 10);
+    loaderListener(_loading);
+
     super.onInit();
     // final SplashController _splashController = Get.find();
     // print('home:userModel');
@@ -78,5 +85,22 @@ class HomeController extends GetxController {
     print('editando: $id');
     var _taskTemp = contacts.firstWhere((element) => element.id == id);
     Get.toNamed(Routes.contactAppend, arguments: _taskTemp);
+  }
+
+  Future<int> countContacts() async {
+    _loading(true);
+
+    final ParseCloudFunction function = ParseCloudFunction('contact-count');
+    final ParseResponse parseResponse = await function.execute();
+    print('parseResponse.result: ${parseResponse.result}');
+    print('parseResponse.results: ${parseResponse.results}');
+    var map;
+    if (parseResponse.success && parseResponse.result != null) {
+      print(parseResponse.result);
+      map = parseResponse.result;
+    }
+    _loading(false);
+
+    return map['count'];
   }
 }

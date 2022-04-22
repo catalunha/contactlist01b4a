@@ -28,9 +28,13 @@ class ContactController extends GetxController with LoaderMixin, MessageMixin {
     // }
   }
 
+  XFile? _xfile;
+  set xfile(XFile? xfile) {
+    _xfile = xfile;
+  }
+
   @override
   void onInit() {
-    super.onInit();
     loaderListener(_loading);
     messageListener(_message);
     ContactModel? model = Get.arguments;
@@ -42,9 +46,10 @@ class ContactController extends GetxController with LoaderMixin, MessageMixin {
     }
     print('selectedDate: $selectedDate');
     _contactModel(model);
+    super.onInit();
   }
 
-  Future<void> append(String name, XFile? _xfile) async {
+  Future<void> append({required String name}) async {
     try {
       _loading(true);
       // DateTime date =

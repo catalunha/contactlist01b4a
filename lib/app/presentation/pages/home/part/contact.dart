@@ -13,37 +13,49 @@ class ContactInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      leading: ClipRRect(
-        borderRadius: BorderRadius.circular(8.0),
-        child:
-            // _homeController.userModel.photoUrl != null
-            //     ?
-            Image.network(
-          contact.photo ?? '',
-          // loadingBuilder: (_, __, ___) {
-          //   return Center(child: const CircularProgressIndicator());
-          // },
-          height: 58,
-          width: 58,
-          errorBuilder: (_, __, ___) {
-            return const SizedBox(
-              height: 58,
-              width: 58,
-              child: Icon(
-                Icons.person,
+    return Card(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          ListTile(
+            leading: ClipRRect(
+              borderRadius: BorderRadius.circular(8.0),
+              child:
+                  // _homeController.userModel.photoUrl != null
+                  //     ?
+                  Image.network(
+                contact.photo ?? '',
+                // loadingBuilder: (_, __, ___) {
+                //   return Center(child: const CircularProgressIndicator());
+                // },
+                height: 58,
+                width: 58,
+                errorBuilder: (_, __, ___) {
+                  return const SizedBox(
+                    height: 58,
+                    width: 58,
+                    child: Icon(
+                      Icons.person,
+                    ),
+                  );
+                },
               ),
-            );
-          },
-        ),
+            ),
+            title: Text('${contact.name} '),
+            subtitle: Text(contact.birthday != null
+                ? dateFormat.format(contact.birthday!)
+                : "..."),
+            onTap: () {
+              print('click');
+              _homeController.editContact(contact.id);
+            },
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10),
+            child: Text('id: ${contact.id} '),
+          )
+        ],
       ),
-      title: Text(
-          '${contact.name} ${contact.birthday != null ? dateFormat.format(contact.birthday!) : "..."}'),
-      subtitle: Text(contact.id),
-      onTap: () {
-        print('click');
-        _homeController.editContact(contact.id);
-      },
     );
   }
 }
