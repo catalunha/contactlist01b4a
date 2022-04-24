@@ -19,8 +19,10 @@ class ContactController extends GetxController with LoaderMixin, MessageMixin {
 
   final Rxn<DateTime> _selectedDate = Rxn<DateTime>();
   DateTime? get selectedDate => _selectedDate.value;
-  set selectedDate(DateTime? selectedDate) {
-    _selectedDate.value = selectedDate;
+  set selectedDate(DateTime? selectedDate1) {
+    _selectedDate.value = selectedDate1;
+    print('set selectedDate: $selectedDate');
+
     // if (selectedDate != null) {
     //   _selectedDate.value = selectedDate;
     // } else {

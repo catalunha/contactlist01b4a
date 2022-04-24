@@ -10,7 +10,9 @@ import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
 class ContactRepositoryB4a implements ContactRepository {
   @override
   Future<void> create(ContactModel contactModel, XFile? _xfile) async {
-    final contact = ParseObject('Contact')..set('name', contactModel.name);
+    final contact = ParseObject('Contact');
+    contact.set('name', contactModel.name);
+    contact.set('birthday', contactModel.birthday);
     var currentUser = await ParseUser.currentUser() as ParseUser?;
     contact.set('createdByUser', currentUser);
     if (_xfile != null) {
