@@ -61,8 +61,8 @@ class _ContactAppendPageState extends State<ContactAppendPage> {
                         Icons.delete_forever,
                       ),
                       onPressed: () {
-                        widget._contactController
-                            .delete(widget._contactController.contactModel!.id);
+                        widget._contactController.delete(
+                            widget._contactController.contactModel!.id!);
                       },
                       label: const Text('Apagar este contato'),
                     ),

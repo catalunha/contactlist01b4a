@@ -36,13 +36,16 @@ class CalendarButton extends StatelessWidget {
               color: Colors.grey,
             ),
             const SizedBox(width: 10),
-            Obx(() {
-              if (_controller.selectedDate != null) {
-                return Text(dateFormat.format(_controller.selectedDate!));
-              } else {
-                return const Text('Selecione uma data');
-              }
-            }),
+            Obx(
+              () {
+                if (_controller.selectedDate != null) {
+                  return Text(
+                      'Aniversário:  ${dateFormat.format(_controller.selectedDate!)}');
+                } else {
+                  return const Text('Aniversário: Selecione uma data');
+                }
+              },
+            ),
           ],
         ),
       ),

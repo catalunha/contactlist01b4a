@@ -47,13 +47,32 @@ class ContactInfo extends StatelessWidget {
                 : "..."),
             onTap: () {
               print('click');
-              _homeController.editContact(contact.id);
+              _homeController.editContact(contact.id!);
             },
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10),
-            child: Text('id: ${contact.id} '),
-          )
+            child: Row(
+              children: [
+                IconButton(
+                    onPressed: () => _homeController.editAddress(contact.id!),
+                    icon: const Icon(Icons.home)),
+                Text(contact.address != null
+                    ? 'CEP: ${contact.address!.cep}. End.: ${contact.address!.description}'
+                    : "..."),
+              ],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10),
+            child: Align(
+              alignment: Alignment.bottomRight,
+              child: Text(
+                'id: ${contact.id} ',
+                // textAlign: TextAlign.end,
+              ),
+            ),
+          ),
         ],
       ),
     );

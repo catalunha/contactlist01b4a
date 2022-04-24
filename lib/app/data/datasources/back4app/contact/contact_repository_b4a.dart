@@ -49,16 +49,22 @@ class ContactRepositoryB4a implements ContactRepository {
     queryContact.orderByAscending('name');
     queryContact.setAmountToSkip((pagination.page - 1) * pagination.limit);
     queryContact.setLimit(pagination.limit);
-
+    queryContact.includeObject(['address']);
     final ParseResponse apiResponse = await queryContact.query();
     if (apiResponse.success && apiResponse.results != null) {
+      print(apiResponse.results![0].objectId);
+      // print(apiResponse.results![0].get('name'));
+      // print(apiResponse.results![0].get('photo'));
+      // print(apiResponse.results![0].get('photo').get('url'));
+      // print(apiResponse.results![0].get('birthday'));
+      // print(apiResponse.results![0].get('address'));
+      // print(apiResponse.results![0].get('address').get('cep'));
       // for (var item in apiResponse.results!) {
       //   print(item.toString());
       // }
       List<ContactModel> contactList = [];
-      contactList = apiResponse.results!
-          .map((e) => ContactModel.fromJson(e.toString()))
-          .toList();
+      contactList =
+          apiResponse.results!.map((e) => ContactModel.fromParse(e)).toList();
       // for (var item in contactList) {
       //   print(item.toString());
       // }
@@ -97,6 +103,16 @@ class ContactRepositoryB4a implements ContactRepository {
       await parseFile.save();
       contact.set('photo', parseFile);
     }
+    await contact.save();
+  }
+
+  @override
+  Future<void> updateAddress(String contactId, String addressId) async {
+    final contact = ParseObject('Contact');
+    contact.objectId = contactId;
+    final address = ParseObject('Address');
+    address.objectId = addressId;
+    contact.set('address', address);
     await contact.save();
   }
 }

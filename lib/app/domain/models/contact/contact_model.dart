@@ -1,17 +1,22 @@
 import 'dart:convert';
 
+import 'package:contactlist01b4a/app/domain/models/address_model.dart';
+import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
+
 class ContactModel {
   static const String className = 'Contact';
 
-  final String id;
+  final String? id;
   final String name;
   final String? photo;
   final DateTime? birthday;
+  final AddressModel? address;
   ContactModel({
     required this.id,
     required this.name,
     this.photo,
     this.birthday,
+    this.address,
   });
 
   ContactModel copyWith({
@@ -19,12 +24,14 @@ class ContactModel {
     String? name,
     String? photo,
     DateTime? birthday,
+    AddressModel? address,
   }) {
     return ContactModel(
       id: id ?? this.id,
       name: name ?? this.name,
       photo: photo ?? this.photo,
       birthday: birthday ?? this.birthday,
+      address: address ?? this.address,
     );
   }
 
@@ -34,6 +41,7 @@ class ContactModel {
       'name': name,
       'photo': photo,
       'birthday': birthday,
+      'address': address?.toMap(),
     };
   }
 
@@ -43,6 +51,7 @@ class ContactModel {
       name: map['name'],
       photo: map['photo']?['url'],
       birthday: map['birthday'],
+      address: AddressModel.fromMap(map['address']),
     );
   }
 
@@ -59,6 +68,27 @@ class ContactModel {
         : null;
     return ContactModel.fromMap(map);
   }
+
+  factory ContactModel.fromParse(ParseObject parseObject) {
+    return ContactModel(
+      id: parseObject.objectId!,
+      name: parseObject.get('name'),
+      photo: parseObject.get('photo')?.get('url'),
+      birthday: parseObject.get('birthday'),
+      address: parseObject.get('address') != null
+          ? AddressModel.fromParse(parseObject.get('address'))
+          : null,
+    );
+  }
+  // ParseObject toParse() {
+  //   final contact = ParseObject('Contact');
+  //   if (id != null) contact.objectId = id;
+  //   contact.set('name', name);
+  //   contact.set('description', description);
+  //   contact.set('city', city);
+  //   contact.set('state', state);
+  //   return contact;
+  // }
 
   @override
   String toString() =>

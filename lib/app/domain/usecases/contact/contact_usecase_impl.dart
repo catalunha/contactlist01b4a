@@ -29,4 +29,8 @@ class ContactUseCaseImpl implements ContactUseCase {
   @override
   Future<void> update(ContactModel contactModel, XFile? _xfile) =>
       _contactRepository.update(contactModel, _xfile);
+
+  @override
+  Future<void> updateAddress(String contactId, String addressId) =>
+      _contactRepository.updateAddress(contactId, addressId);
 }

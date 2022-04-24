@@ -7,5 +7,7 @@ abstract class ContactUseCase {
   Future<List<ContactModel>> list(Pagination pagination);
   Future<ContactModel?> readById(String id);
   Future<void> update(ContactModel contactModel, XFile? _xfile);
+  Future<void> updateAddress(String contactId, String addressId);
+
   Future<void> delete(String id);
 }

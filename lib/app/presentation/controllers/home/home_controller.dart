@@ -103,4 +103,16 @@ class HomeController extends GetxController with LoaderMixin {
 
     return map['count'];
   }
+
+  Future<void> updateAddress(String contactId, String addressId) async {
+    await _contactUseCase.updateAddress(contactId, addressId);
+    await reloadListContacts();
+  }
+
+  void editAddress(String id) async {
+    print('editando address: $id');
+    var _taskTemp = contacts.firstWhere((element) => element.id == id);
+    Get.toNamed(Routes.addressAppend,
+        arguments: {'model': _taskTemp.address, 'contactId': id});
+  }
 }

@@ -1,3 +1,4 @@
+import 'package:contactlist01b4a/app/data/datasources/back4app/init_back4app.dart';
 import 'package:contactlist01b4a/app/domain/models/user/user_model.dart';
 import 'package:contactlist01b4a/app/domain/usecases/auth/auth_usecase.dart';
 import 'package:contactlist01b4a/app/presentation/routes.dart';
@@ -28,6 +29,13 @@ class SplashController extends GetxController {
       // deleayed code here
       print('delayed execution');
     });
+
+    print('+++ initParse');
+    InitBack4app initBack4app = InitBack4app();
+    bool initParse = await initBack4app.init();
+    print('initParse: $initParse');
+    print('--- initParse');
+
     final isLogged = await _hasUserLogged();
     if (isLogged) {
       print('tem user indo para home');
