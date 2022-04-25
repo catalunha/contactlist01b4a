@@ -80,6 +80,7 @@ class ContactModel {
           : null,
     );
   }
+
   // ParseObject toParse() {
   //   final contact = ParseObject('Contact');
   //   if (id != null) contact.objectId = id;

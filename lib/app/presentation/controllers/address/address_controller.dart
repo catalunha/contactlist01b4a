@@ -76,8 +76,8 @@ class AddressController extends GetxController with LoaderMixin, MessageMixin {
 
   Future<void> delete(String id) async {
     await _addressUseCase.delete(id);
-    final HomeController _homeController = Get.find();
-    await _homeController.reloadListContacts();
+    // final HomeController _homeController = Get.find();
+    // await _homeController.reloadListContacts();
 
     Get.back();
   }

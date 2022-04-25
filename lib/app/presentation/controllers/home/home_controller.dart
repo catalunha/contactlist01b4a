@@ -32,11 +32,11 @@ class HomeController extends GetxController with LoaderMixin {
 
   @override
   void onInit() {
-    ever(_pagination, (_) => listContacts());
+    ever(_pagination, (_) => subscribe());
     _changePagination(1, 10);
     loaderListener(_loading);
-
     super.onInit();
+    // subscribe();
     // final SplashController _splashController = Get.find();
     // print('home:userModel');
     // print(_splashController.userModel.toString());
@@ -45,26 +45,35 @@ class HomeController extends GetxController with LoaderMixin {
     // listContacts();
   }
 
-  Future<void> listContacts() async {
-    final list = await _contactUseCase.list(_pagination.value);
-    if (list.isEmpty) {
-      _lastPage.value = true;
-    }
-    // _contactList.clear();
-    _contactList.addAll(list);
+  // void listPrint() {
+  //   print('Daniel Daniel...');
+  // }
+
+  void subscribe() {
+    _contactUseCase.subscribe(
+        list: _contactList, pagination: _pagination.value);
   }
 
-  Future<void> reloadListContacts() async {
-    _contactList.clear();
-    var paginationtemp = Pagination();
-    paginationtemp.page = 1;
-    paginationtemp.limit = _pagination.value.page * _pagination.value.limit;
-    final list = await _contactUseCase.list(paginationtemp);
-    if (list.isEmpty) {
-      _lastPage.value = true;
-    }
-    _contactList.addAll(list);
-  }
+  // Future<void> listContacts() async {
+  //   final list = await _contactUseCase.list(_pagination.value);
+  //   if (list.isEmpty) {
+  //     _lastPage.value = true;
+  //   }
+  //   // _contactList.clear();
+  //   _contactList.addAll(list);
+  // }
+
+  // Future<void> reloadListContacts() async {
+  //   _contactList.clear();
+  //   var paginationtemp = Pagination();
+  //   paginationtemp.page = 1;
+  //   paginationtemp.limit = _pagination.value.page * _pagination.value.limit;
+  //   final list = await _contactUseCase.list(paginationtemp);
+  //   if (list.isEmpty) {
+  //     _lastPage.value = true;
+  //   }
+  //   _contactList.addAll(list);
+  // }
 
   void _changePagination(int page, int limit) {
     _pagination.update((val) {
@@ -106,7 +115,7 @@ class HomeController extends GetxController with LoaderMixin {
 
   Future<void> updateAddress(String contactId, String addressId) async {
     await _contactUseCase.updateAddress(contactId, addressId);
-    await reloadListContacts();
+    // await reloadListContacts();
   }
 
   void editAddress(String id) async {

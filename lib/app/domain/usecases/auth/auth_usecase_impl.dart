@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:contactlist01b4a/app/data/repositories/auth_repository.dart';
+import 'package:contactlist01b4a/app/data/datasources/back4app/repositories/auth_repository.dart';
 import 'package:contactlist01b4a/app/domain/models/user/user_model.dart';
 import 'package:contactlist01b4a/app/domain/usecases/auth/auth_usecase.dart';
 

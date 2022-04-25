@@ -1,7 +1,8 @@
-import 'package:contactlist01b4a/app/data/repositories/contact_repository.dart';
+import 'package:contactlist01b4a/app/data/datasources/back4app/repositories/contact_repository.dart';
 import 'package:contactlist01b4a/app/domain/models/contact/contact_model.dart';
 import 'package:contactlist01b4a/app/domain/usecases/contact/contact_usecase.dart';
 import 'package:contactlist01b4a/app/domain/utils/pagination.dart';
+import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:image_picker/image_picker.dart';
 
 class ContactUseCaseImpl implements ContactUseCase {
@@ -33,4 +34,9 @@ class ContactUseCaseImpl implements ContactUseCase {
   @override
   Future<void> updateAddress(String contactId, String addressId) =>
       _contactRepository.updateAddress(contactId, addressId);
+
+  @override
+  void subscribe(
+          {required RxList<ContactModel> list, Pagination? pagination}) =>
+      _contactRepository.subscribe(list: list, pagination: pagination);
 }

@@ -5,7 +5,7 @@ import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
 class AddressModel {
   static const String className = 'Address';
   final String? id;
-
+  ParseObject? _parseObject;
   final String cep;
   final String description;
   final String? city;
@@ -68,6 +68,7 @@ class AddressModel {
       state: parseObject.get('state'),
     );
   }
+
   ParseObject toParse() {
     final address = ParseObject('Address');
     if (id != null) address.objectId = id;

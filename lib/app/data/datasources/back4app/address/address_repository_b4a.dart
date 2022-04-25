@@ -1,5 +1,5 @@
 import 'package:contactlist01b4a/app/data/datasources/back4app/address/address_repository_exception.dart';
-import 'package:contactlist01b4a/app/data/repositories/address_repository.dart';
+import 'package:contactlist01b4a/app/data/datasources/back4app/repositories/address_repository.dart';
 import 'package:contactlist01b4a/app/domain/models/address_model.dart';
 import 'package:contactlist01b4a/app/domain/utils/pagination.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';

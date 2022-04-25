@@ -1,7 +1,6 @@
 import 'package:contactlist01b4a/app/data/datasources/back4app/contact/contact_repository_exception.dart';
 import 'package:contactlist01b4a/app/domain/models/contact/contact_model.dart';
 import 'package:contactlist01b4a/app/domain/usecases/contact/contact_usecase.dart';
-import 'package:contactlist01b4a/app/presentation/controllers/home/home_controller.dart';
 import 'package:contactlist01b4a/app/presentation/controllers/utils/mixins/loader_mixin.dart';
 import 'package:contactlist01b4a/app/presentation/controllers/utils/mixins/message_mixin.dart';
 import 'package:get/get.dart';
@@ -69,8 +68,8 @@ class ContactController extends GetxController with LoaderMixin, MessageMixin {
             _contactModel.value!.copyWith(name: name, birthday: selectedDate);
         await _contactUseCase.update(contactModel, _xfile);
       }
-      final HomeController _homeController = Get.find();
-      await _homeController.reloadListContacts();
+      // final HomeController _homeController = Get.find();
+      // await _homeController.reloadListContacts();
     } on ContactRepositoryException {
       _message.value = MessageModel(
         title: 'Erro em Repository',
@@ -84,8 +83,8 @@ class ContactController extends GetxController with LoaderMixin, MessageMixin {
 
   Future<void> delete(String id) async {
     await _contactUseCase.delete(id);
-    final HomeController _homeController = Get.find();
-    await _homeController.reloadListContacts();
+    // final HomeController _homeController = Get.find();
+    // await _homeController.reloadListContacts();
 
     Get.back();
   }

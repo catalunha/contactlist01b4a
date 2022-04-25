@@ -3,6 +3,7 @@ import 'package:contactlist01b4a/app/presentation/controllers/home/home_controll
 import 'package:contactlist01b4a/app/presentation/pages/home/part/contact_list.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
 
 class HomePage extends StatelessWidget {
   final HomeController _homeController = Get.find();
@@ -11,6 +12,15 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    QueryBuilder<ParseObject> queryContact =
+        QueryBuilder<ParseObject>(ParseObject('Contact'));
+    // var currentUser = await ParseUser.currentUser() as ParseUser?;
+    // queryContact.whereEqualTo('createdByUser', currentUser);
+    queryContact.orderByAscending('name');
+    // queryContact.setAmountToSkip((pagination.page - 1) * pagination.limit);
+    // queryContact.setLimit(pagination.limit);
+    queryContact.includeObject(['address']);
+
     return Scaffold(
       appBar: AppBar(
         // title: const Text('Home'),
@@ -40,6 +50,28 @@ class HomePage extends StatelessWidget {
           ),
         ],
       ),
+      // body: ParseLiveListWidget<ParseObject>(
+      //   query: queryContact,
+      //   reverse: false,
+      //   childBuilder: (BuildContext context,
+      //       ParseLiveListElementSnapshot<ParseObject> snapshot) {
+      //     if (snapshot.failed) {
+      //       return const Text('something went wrong!');
+      //     } else if (snapshot.hasData) {
+      //       final contact = ContactModel.fromParse(snapshot.loadedData!);
+      //       return ContactInfo(contact: contact);
+      //       // return ListTile(
+      //       //   title: Text(
+      //       //     snapshot.loadedData!.get("name"),
+      //       //   ),
+      //       // );
+      //     } else {
+      //       return const ListTile(
+      //         leading: CircularProgressIndicator(),
+      //       );
+      //     }
+      //   },
+      // ),
       body: Column(
         children: [
           // Container(

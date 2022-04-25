@@ -1,6 +1,7 @@
 
 # deploy
 ```
+$ flutter build web
 $ rm -r ~/myapp/contactlist01b4a_cloudcode/contactList01/public/*
 $ cp -a /home/catalunha/myapp/contactlist01b4a/build/web/. ~/myapp/contactlist01b4a_cloudcode/contactList01/public/
 $ cd ~/myapp/contactlist01b4a_cloudcode/contactList01

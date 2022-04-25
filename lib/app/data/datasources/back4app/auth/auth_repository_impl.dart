@@ -1,5 +1,5 @@
 import 'package:contactlist01b4a/app/data/datasources/back4app/auth/auth_repository_exception.dart';
-import 'package:contactlist01b4a/app/data/repositories/auth_repository.dart';
+import 'package:contactlist01b4a/app/data/datasources/back4app/repositories/auth_repository.dart';
 import 'package:contactlist01b4a/app/domain/models/user/user_model.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
 
