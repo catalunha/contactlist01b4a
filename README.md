@@ -14,3 +14,39 @@ $ b4a deploy
 $ flutter create --project-name=contactlist01b4a --org education.brintec --platforms android,web -a kotlin ./contactlist01b4a
 
 ```
+
+# Constraints
+
+
+
+* Basic
+  * Equals
+  * Contains
+  * LessThan
+  * LessThanOrEqualTo
+  * GreaterThan
+  * GreaterThanOrEqualTo
+  * NotEqualTo
+  * StartsWith
+  * EndsWith
+  * Exists
+* GeoPoint
+  * Near
+  * WithinMiles
+  * WithinKilometers
+  * WithinRadians
+  * WithinGeoBox
+  * WithinPolygon
+* Relational Constraints
+  * MatchesQuery
+  * DoesNotMatchQuery
+  * MatchesKeyInQuery
+  * DoesNotMatchKeyInQuery
+* Regex
+* Sorting
+  * Order
+    * Ascending
+    * Descending
+  * Limit
+  * Skip
+  * 

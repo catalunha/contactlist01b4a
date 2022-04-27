@@ -90,19 +90,24 @@ class ContactRepositoryB4a extends GetxService implements ContactRepository {
         QueryBuilder<ParseObject>(ParseObject('Contact'));
     var currentUser = await ParseUser.currentUser() as ParseUser?;
     queryContact.whereEqualTo('createdByUser', currentUser);
-    queryContact.orderByAscending('name');
     if (pagination != null) {
       queryContact.setAmountToSkip((pagination.page - 1) * pagination.limit);
       queryContact.setLimit(pagination.limit);
     }
+    queryContact.keysToReturn(['name', 'photo', 'birthday', 'address']);
+    queryContact.orderByAscending('name');
     queryContact.includeObject(['address']);
     return queryContact;
   }
 
   Future<ContactModel> modelWithSubObject(ParseObject value) async {
-    if ((value).get('address') != null) {
-      await (value).get('address').fetch();
+    if (value.containsKey('address')) {
+      ParseObject address = (value).get('address');
+      await address.fetch();
     }
+    // if ((value).get('address') != null) {
+    //   await (value).get('address').fetch();
+    // }
     final contactNew = ContactModel.fromParse(value);
     return contactNew;
   }

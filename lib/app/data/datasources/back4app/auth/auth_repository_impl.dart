@@ -9,6 +9,9 @@ class AuthRepositoryImpl implements AuthRepository {
       {required String email, required String password}) async {
     try {
       final user = ParseUser.createUser(email, password, email);
+      ParseACL parseACL = ParseACL();
+      parseACL.setPublicReadAccess(allowed: false);
+      user.setACL(parseACL);
       var response = await user.signUp();
       if (response.success) {
         print('register success');
